@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+.env_back
+venv/
+.venv/
+venv.bak/
+
+# Environment Variables
+.env
+.streamlit/secrets.toml
+
+# Streamlit
+.streamlit/*
+!.streamlit/config.toml
+
+# Media / Audio Temp
+*.mp3
+*.wav
+*.flac
+*.m4a
+*.ogg
+*.tmp
+
+# Uploads
+*.pdf
+*.txt
+*.json
