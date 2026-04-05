@@ -30,3 +30,7 @@ venv.bak/
 *.pdf
 *.txt
 *.json
+!requirements.txt
+!packages.txt
+!modules/*.txt
+!modules/**/*.txt

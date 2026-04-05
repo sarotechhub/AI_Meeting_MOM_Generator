@@ -1,0 +1,19 @@
+# Core Streamlit app
+streamlit
+python-dotenv
+
+# AI & LLM (OpenAI-compatible clients)
+openai
+
+# NLP (spaCy and model)
+spacy
+en_core_web_sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.1/en_core_web_sm-3.7.1-py3-none-any.whl
+
+# PDF Generation
+reportlab
+
+# Data processing
+pandas
+
+# Media processing (FFmpeg binaries through imageio)
+imageio-ffmpeg
