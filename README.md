@@ -61,10 +61,26 @@ cp .env.example .env
 ### 5. Run the app
 
 ```bash
+# Local development
 streamlit run app.py
+
+# Or use the Cloud-compatible entry point
+streamlit run streamlit_app.py
 ```
 
 The app opens at **http://localhost:8501** 🎉
+
+---
+
+## ☁️ Deployment to Streamlit Cloud
+
+See **[DEPLOYMENT.md](./DEPLOYMENT.md)** for complete step-by-step instructions.
+
+**Quick deploy:**
+1. Push code to GitHub
+2. Go to [share.streamlit.io](https://share.streamlit.io)
+3. Deploy from your repo (main file: `streamlit_app.py`)  
+4. Add API keys via Secrets settings
 
 ---
 

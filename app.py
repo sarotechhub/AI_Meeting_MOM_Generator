@@ -649,6 +649,15 @@ def main():
     nvidia_key = os.getenv("NVIDIA_API_KEY", "").strip()
 
     if render_generate_button():
+        # Validate API key availability before processing
+        if not nvidia_key:
+            st.warning(
+                "⚠️ **NVIDIA API key is not configured.**\n\n"
+                "The app will attempt to use a local LLM as fallback (slower and less accurate).\n\n"
+                "**For Streamlit Cloud:** Add `NVIDIA_API_KEY` to Secrets (gear icon → Manage secrets).\n"
+                "**For local development:** Add `NVIDIA_API_KEY=xxx` to your `.env` file."
+            )
+        
         with st.spinner("🧠 Analyzing transcript with AI... please wait"):
             try:
                 t0 = time.time()
@@ -667,6 +676,14 @@ def main():
                 st.success(f"✅ Insights generated in {elapsed:.1f}s")
             except Exception as e:
                 st.error(f"❌ Generation failed: {e}")
+                if "API" in str(e) or "key" in str(e).lower():
+                    st.info(
+                        "💡 **API Configuration Issue:**\n\n"
+                        "Make sure both API keys are properly configured:\n"
+                        "- `GROQ_API_KEY` for audio transcription\n"
+                        "- `NVIDIA_API_KEY` for insights generation\n\n"
+                        "See **DEPLOYMENT.md** for setup instructions."
+                    )
                 st.exception(e)
 
     if st.session_state.insights:

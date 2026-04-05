@@ -60,6 +60,12 @@ Meeting Transcript:
 def _call_nvidia_api(transcript: str, api_key: str) -> dict:
     """Call NVIDIA NIM endpoint via the OpenAI-compatible SDK."""
     from openai import OpenAI
+    
+    if not api_key or not api_key.strip():
+        raise ValueError(
+            "NVIDIA_API_KEY is missing or empty. "
+            "Please configure it in Streamlit secrets or .env file."
+        )
 
     client = OpenAI(
         base_url="https://integrate.api.nvidia.com/v1",
@@ -68,15 +74,29 @@ def _call_nvidia_api(transcript: str, api_key: str) -> dict:
 
     user_msg = USER_PROMPT_TEMPLATE.format(transcript=transcript)
 
-    response = client.chat.completions.create(
-        model="meta/llama-3.1-70b-instruct",
-        messages=[
-            {"role": "system", "content": SYSTEM_PROMPT},
-            {"role": "user", "content": user_msg},
-        ],
-        temperature=0.1,
-        max_tokens=2048,
-    )
+    try:
+        response = client.chat.completions.create(
+            model="meta/llama-3.1-70b-instruct",
+            messages=[
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user", "content": user_msg},
+            ],
+            temperature=0.1,
+            max_tokens=2048,
+        )
+    except Exception as e:
+        error_msg = str(e)
+        if "401" in error_msg or "Unauthorized" in error_msg:
+            raise ValueError(
+                "NVIDIA API key is invalid or expired. "
+                "Please check your API key at build.nvidia.com"
+            )
+        elif "429" in error_msg:
+            raise ValueError(
+                "NVIDIA API rate limit exceeded. Please wait a moment and try again."
+            )
+        else:
+            raise ValueError(f"NVIDIA API error: {error_msg}")
 
     raw = response.choices[0].message.content
     return _parse_llm_response(raw)

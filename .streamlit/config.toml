@@ -1,9 +1,14 @@
 [server]
 headless = true
 port = 8501
+maxUploadSize = 500
+enableCORS = false
 
 [browser]
 gatherUsageStats = false
+
+[client]
+showErrorDetails = true
 
 [theme]
 base = "light"

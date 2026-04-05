@@ -1,19 +1,21 @@
 # Core Streamlit app
-streamlit
-python-dotenv
+streamlit>=1.28.0
+python-dotenv>=1.0.0
 
 # AI & LLM (OpenAI-compatible clients)
-openai
+openai>=1.3.0
 
 # NLP (spaCy and model)
-spacy
+spacy>=3.7.0
 en_core_web_sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.1/en_core_web_sm-3.7.1-py3-none-any.whl
 
 # PDF Generation
-reportlab
+reportlab>=4.0.0
 
 # Data processing
-pandas
+pandas>=2.0.0
 
 # Media processing (FFmpeg binaries through imageio)
-imageio-ffmpeg
+# Note: Streamlit Cloud provides FFmpeg through packages.txt
+# This is used only for local development
+imageio-ffmpeg>=0.4.8
