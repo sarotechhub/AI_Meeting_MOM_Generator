@@ -18,19 +18,9 @@ def _load_spacy_model():
     """Load and cache the spaCy English model."""
     try:
         import spacy
-        try:
-            nlp = spacy.load("en_core_web_sm")
-        except OSError:
-            # Auto-download model if not installed
-            import subprocess, sys
-            subprocess.run(
-                [sys.executable, "-m", "spacy", "download", "en_core_web_sm"],
-                check=True,
-                capture_output=True,
-            )
-            nlp = spacy.load("en_core_web_sm")
-        return nlp
+        return spacy.load("en_core_web_sm")
     except Exception as e:
+        # Avoid blocking during startup on Cloud environments
         st.warning(
             "⚠️ Extended name detection is currently unavailable. "
             "Action item owners will be determined based on transcript context."
