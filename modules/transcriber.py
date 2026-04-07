@@ -12,7 +12,6 @@ import subprocess
 import shutil
 import streamlit as st
 from openai import OpenAI
-import imageio_ffmpeg
 from modules.utils import clean_text
 
 # 25MB limit on API. We chunk every 10 mins (600 seconds)
@@ -54,7 +53,7 @@ def transcribe_audio(uploaded_file, api_key: str) -> str:
             temp_dir = tempfile.mkdtemp()
             chunk_pattern = os.path.join(temp_dir, "chunk_%03d.mp3")
             
-            ffmpeg_exe = imageio_ffmpeg.get_ffmpeg_exe()
+            ffmpeg_exe = "ffmpeg"
             command = [
                 ffmpeg_exe,
                 "-y",
