@@ -340,11 +340,12 @@ def render_sidebar() -> dict:
             st.rerun()
 
         st.divider()
-        st.markdown("### 📘 About")
+        st.markdown("### 📘 How to Use This App")
         st.info(
-            "**AI Meeting MOM Generator** uses Groq (Whisper-Large) for transcription, "
-            "NVIDIA LLaMA-3.1 for insight extraction, and spaCy for name detection.\n\n"
-            "No data is stored server-side.",
+            "1. **Upload or Paste** a meeting audio/transcript.\n"
+            "2. **Transcribe** if an audio file was uploaded.\n"
+            "3. Click **Generate Meeting Insights** to extract summary, actions, and decisions.\n"
+            "4. **Export** the final report as PDF or Text.",
             icon="ℹ️",
         )
         
@@ -382,7 +383,7 @@ def render_input_section():
             if st.button("🎙️ Transcribe Audio", key="btn_transcribe"):
                 groq_key = os.getenv("GROQ_API_KEY", "").strip()
                 if not groq_key:
-                    st.error("❌ Groq API key is missing! Add `GROQ_API_KEY=xxx` to your .env file.")
+                    st.error("❌ Transcription system is not configured. Please check your environment setup.")
                 else:
                     try:
                         transcript = transcribe_audio(uploaded_audio, api_key=groq_key)
@@ -652,10 +653,9 @@ def main():
         # Validate API key availability before processing
         if not nvidia_key:
             st.warning(
-                "⚠️ **NVIDIA API key is not configured.**\n\n"
-                "The app will attempt to use a local LLM as fallback (slower and less accurate).\n\n"
-                "**For Streamlit Cloud:** Add `NVIDIA_API_KEY` to Secrets (gear icon → Manage secrets).\n"
-                "**For local development:** Add `NVIDIA_API_KEY=xxx` to your `.env` file."
+                "⚠️ **Analysis system is not fully configured.**\n\n"
+                "The app will attempt a local analysis, which may be slower. "
+                "For full performance, please ensure all required configuration files are present."
             )
         
         with st.spinner("🧠 Analyzing transcript with AI... please wait"):
@@ -678,11 +678,10 @@ def main():
                 st.error(f"❌ Generation failed: {e}")
                 if "API" in str(e) or "key" in str(e).lower():
                     st.info(
-                        "💡 **API Configuration Issue:**\n\n"
-                        "Make sure both API keys are properly configured:\n"
-                        "- `GROQ_API_KEY` for audio transcription\n"
-                        "- `NVIDIA_API_KEY` for insights generation\n\n"
-                        "See **DEPLOYMENT.md** for setup instructions."
+                        "💡 **How to resolve this:**\n\n"
+                        "1. Ensure you have provided a valid transcript or audio file.\n"
+                        "2. Check if the meeting audio is clear and audible.\n"
+                        "3. Try refreshing the page and uploading the file again."
                     )
                 st.exception(e)
 

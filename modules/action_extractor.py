@@ -32,8 +32,8 @@ def _load_spacy_model():
         return nlp
     except Exception as e:
         st.warning(
-            f"⚠️ spaCy not available ({e}). Name detection will be skipped. "
-            "Run: `pip install spacy && python -m spacy download en_core_web_sm`"
+            "⚠️ Extended name detection is currently unavailable. "
+            "Action item owners will be determined based on transcript context."
         )
         return None
 
